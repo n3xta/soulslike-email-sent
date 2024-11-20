@@ -1,0 +1,27 @@
+{
+    "manifest_version": 3,
+    "name": "Soulslike Email Sent",
+    "version": "1.0",
+    "description": "Popup an email sent notification after you send an email. In Dark Souls style.",
+    "permissions": [
+        "activeTab",
+        "scripting"
+    ],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": ["https://mail.google.com/*"],
+            "js": ["content.js"],
+            "css": ["styles.css"],
+            "run_at": "document_idle"
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": ["emailsent.png"],
+            "matches": ["https://mail.google.com/*"]
+        }
+    ]
+}
