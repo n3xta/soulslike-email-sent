@@ -1,43 +1,55 @@
-// content.js
-
-// 函数：显示覆盖层
 function showOverlay() {
-    // 检查是否已经存在覆盖层，避免重复创建
     if (document.getElementById('soulslike-email-overlay')) return;
 
-    // 创建覆盖层
     const overlay = document.createElement('div');
     overlay.id = 'soulslike-email-overlay';
-    overlay.className = 'overlay visible';
+    overlay.className = 'overlay';
 
-    // 创建图片元素
-    const img = document.createElement('img');
-    img.src = chrome.runtime.getURL('emailsent.png');
-    img.alt = 'Email Sent';
-    img.className = 'popup';
-
-    overlay.appendChild(img);
+    const imgContainer = document.createElement('div');
+    imgContainer.className = 'img-container';
+    
+    const layer1 = document.createElement('img');
+    layer1.src = chrome.runtime.getURL('public/layer1.png');
+    layer1.alt = 'Layer 1';
+    layer1.className = 'layer layer1';
+    
+    const layer2 = document.createElement('img');
+    layer2.src = chrome.runtime.getURL('public/layer2.png');
+    layer2.alt = 'Layer 2';
+    layer2.className = 'layer layer2';
+    
+    const layer3 = document.createElement('img');
+    layer3.src = chrome.runtime.getURL('public/layer3.png');
+    layer3.alt = 'Layer 3';
+    layer3.className = 'layer layer3';
+    
+    imgContainer.appendChild(layer1);
+    imgContainer.appendChild(layer2);
+    imgContainer.appendChild(layer3);
+    
+    overlay.appendChild(imgContainer);
     document.body.appendChild(overlay);
 
-    // 在3秒后移除覆盖层
+    overlay.offsetHeight;
+
+    requestAnimationFrame(() => {
+        overlay.classList.add('visible');
+    });
+
     setTimeout(() => {
         overlay.classList.remove('visible');
-        // 等待过渡动画完成后移除元素
         setTimeout(() => {
             if (overlay.parentNode) {
                 overlay.parentNode.removeChild(overlay);
             }
-        }, 500); // 与CSS中的transition时间一致
-    }, 3000);
+        }, 500);
+    }, 2500);
 }
 
-// 事件委托：监听所有点击事件
 document.addEventListener('click', (event) => {
     let target = event.target;
 
-    // 向上遍历DOM树，查找是否有匹配的发送按钮
     while (target && target !== document.body) {
-        // 使用更通用的选择器，避免依赖具体的类名
         if (
             target.matches('[role="button"][aria-label*="Send"]') ||
             target.textContent.trim() === 'Send'
@@ -50,12 +62,10 @@ document.addEventListener('click', (event) => {
     }
 });
 
-// 使用 MutationObserver 监听 DOM 变化，确保动态加载的按钮也能被监听
 const observer = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
         mutation.addedNodes.forEach((node) => {
             if (node.nodeType === 1) { // 元素节点
-                // 检查是否是发送按钮
                 if (
                     node.matches('[role="button"][aria-label*="Send"]') ||
                     node.textContent.trim() === 'Send'
@@ -71,13 +81,10 @@ const observer = new MutationObserver((mutations) => {
     });
 });
 
-// 配置观察选项
 const config = { childList: true, subtree: true };
 
-// 开始监视 Gmail 的 DOM 变化
 observer.observe(document.body, config);
 
-// 初始化时查找发送按钮
 const initialSendButton = document.querySelector('[role="button"][aria-label*="Send"], [role="button"][data-tooltip*="Send"]');
 if (initialSendButton) {
     console.log('Initial send button found');

@@ -20,7 +20,7 @@
     ],
     "web_accessible_resources": [
         {
-            "resources": ["emailsent.png"],
+            "resources": ["emailsent.png", "public/layer1.png", "public/layer2.png", "public/layer3.png"],
             "matches": ["https://mail.google.com/*"]
         }
     ]
