@@ -5,7 +5,8 @@
     "description": "Popup an email sent notification after you send an email. In Dark Souls style.",
     "permissions": [
         "activeTab",
-        "scripting"
+        "scripting",
+        "storage"
     ],
     "background": {
         "service_worker": "background.js"
@@ -20,7 +21,13 @@
     ],
     "web_accessible_resources": [
         {
-            "resources": ["emailsent.png", "public/layer1.png", "public/layer2.png", "public/layer3.png"],
+            "resources": [
+                "emailsent.png",
+                "public/ds1/*",
+                "public/ds2/*",
+                "public/ds3/*",
+                "public/elden_ring/*"
+            ],
             "matches": ["https://mail.google.com/*"]
         }
     ]
