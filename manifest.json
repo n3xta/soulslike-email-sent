@@ -1,11 +1,9 @@
 {
     "manifest_version": 3,
-    "name": "Soulslike Email Sent",
+    "name": "Ultimate Email Send Screen",
     "version": "1.0",
-    "description": "Popup an email sent notification after you send an email. In Dark Souls style.",
+    "description": "Popup an email sent notification after you send an email. In various game styles.",
     "permissions": [
-        "activeTab",
-        "scripting",
         "storage"
     ],
     "background": {
